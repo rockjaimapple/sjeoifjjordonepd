@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Scilympiad, Science Olympiad">
+    <meta name="description" content="Scilympiad is a tournament and scoring management system, specifically designed for Science Olympiad tournaments to manage registration, payment, event signup, test creation, online test taking, etc.">
+    <title>Scilympiad - Jordan Science Olympiad</title>
+    <link href="/Content/css?v=Yv8lur5kamThl65WdFtYYGEDUvOJ-jY95s6Xezjl7iY1" rel="stylesheet"/>
+
+    <script src="/bundles/modernizr?v=wBEWDufH_8Md-Pbioxomt90vm6tJN2Pyy9u9zHtWsPo1"></script>
+
+    <script src="/bundles/jquery?v=v76fAns59-4kGkYyDyEXyw9RgnmvJyXSd0eFBt05RzE1"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+                    <a class="navbar-brand" href="https://scilympiad.com/jordan-so">Jordan Science Olympiad</a>
+        </div>
+        <div class="navbar-collapse collapse navbar-right">
+            <ul class="nav navbar-nav">
+                <li><a href='/jordan-so/Support'>Support</a></li>
+                <li><a href='/jordan-so/Student/StudentDB'>Student Login</a></li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Coaches<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href='/jordan-so/ForHcs/HcDB'>Head Coach Dashboard</a></li>
+                            <li class="divider"></li>
+                            <li><a href='/jordan-so/Reg'>School/Teams Registration</a></li>
+                            <li><a href="/jordan-so/QnAs/doc/Agenda">Workshop</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tournament<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href='/jordan-so/Info/Tournaments'>Tournaments</a></li>
+                            <li><a href="/jordan-so/QnAs/doc/tournament-updates">Tournament updates</a></li>
+                            <li><a href='/jordan-so/Info/TourResults'>Tournament Results</a></li>
+                            <li class="divider"></li>
+                            <li><a href='/jordan-so/Map/VenueMaps'>Tournament Maps</a></li>
+							
+                        </ul>
+                    </li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#">Volunteer<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href='/jordan-so/Volunteer/VolOps'>Volunteer Opportunities</a></li>
+							<li class="divider"></li>
+							<li><a href="/jordan-so/Volunteer/Doc/event-supervisor-signup">Event Supervisor Signup</a></li>
+							<li class="divider"></li>
+							<li><a href='/jordan-so/Volunteer/MealPlans'>Meal Order Form</a></li>
+						</ul>
+                    </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Resources<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="https://www.soinc.org" target="_blank">National Science Olympiad</a></li>
+                        <li><a href="https://www.soinc.org/join/policies" target="_blank">Policies</a></li>
+                        <li><a href="http://scioly.org" target="_blank">Scioly.org Student Center</a></li>
+                        <li><a href="https://scioly.org/chat.php?r=scilympiad" target="_blank">Scioly.org Discord</a></li>
+                        <li><a href="https://groups.google.com/forum/#!forum/scienceolympiadcoaches" target="_blank">Coaches’ Google Group</a></li>
+                            <li><a href="/jordan-so/Pscore">Device Event Scoring</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/jordan-so/Docs/UsefulDocs">Tournament documents</a></li>
+                    </ul>
+                </li>
+    <li><a href="/jordan-so/Account/Login" id="loginLink">Log in</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+    <div class="container">
+        
+
+<script>
+    var gJoined = false, gTourId, gGrp, gSender, gStuIds, gTestId, gTeamNo, gSessId, gClass, gFname;
+    var startTime, secsOff;
+    var xx;
+    var chat;
+    $(document).ready(function () {
+        gSender = $('#senderid').val();
+        gFname = $('#firstname').val();
+        gStuIds = '';
+        gTourId = $('#tourid').val();
+        gTestId = $('#testid').val();
+        gTeamNo = $('#teamno').val();
+        gSessId = $('#sessid').val();
+        gGrp = gTourId + "-" + gTestId + "-" + gTeamNo;
+        gClass = "ES-" + gTourId + "-" + gTestId;
+        gHours = parseInt($('#hrsoff').val(), 10);
+        SetPage();
+    });
+    function SetPage() {
+        var ttoks = $("#syscur").val().split("^");
+        if (ttoks.length != 6) alert("Invalid date");
+        secsOff = 3600 * gHours;
+        var sysTime = Math.round(new Date(ttoks[0], ttoks[1] - 1, ttoks[2], ttoks[3], ttoks[4], ttoks[5]).getTime() / 1000);
+        var cTime = new Date(new Date().toLocaleString('en-US', { timeZone: "UTC" })).getTime() / 1000;
+        ttoks = $("#TestStart").val().split("^");
+        if (ttoks.length != 6) alert("Invalid date");
+        startTime = Math.round(new Date(ttoks[0], ttoks[1] - 1, ttoks[2], ttoks[3], ttoks[4], ttoks[5]).getTime() / 1000);
+        if (startTime > cTime) xx = setInterval(CheckTime, 1000);
+        if (Math.abs(sysTime - cTime) > 120) alert("Your device clock seems to be off. Please verify your device time against time on your mobile phone or other time sources for accuracy. (Off by " + (sysTime - cTime) + " seconds)");
+    }
+    function CheckTime() {
+        var cTime = new Date(new Date().toLocaleString('en-US', { timeZone: "UTC" })).getTime() / 1000;
+        var tDelta = Math.round(startTime - cTime);
+        if (isNaN(tDelta) || tDelta <= 0) {
+            clearInterval(xx);
+            $("#idStart").show();
+            $("#idClose").hide();
+            alert("You can now start your test.");
+        }
+        else {
+            var hours = Math.floor(tDelta / 3600);
+            var mins = Math.floor((tDelta % 3600) / 60);
+            var secs = tDelta % 60;
+            $("#timeLeft").html("<b>" + hours + "h " + mins + "m " + secs + "s to opening</b>");
+        }
+    }
+</script>
+<h4 class="w3-food-orange text-center" style="height: 36px; padding: 10px;">
+    Experimental Design  &nbsp; - &nbsp;  Experimental Design &nbsp; - &nbsp; Open: 03/22/24 01:30 PM - 03/30/24 11:59 PM
+    <span id="timeLeft" style="color:yellow;font-size:0.9em;"></span>
+</h4>
+<br />
+<div class="row">
+    <div style="background-color:antiquewhite;height:480px; overflow: auto; padding:10px;">
+        <input id="TestStart" name="TestStart" type="hidden" value="2024^3^22^18^30^0" />
+        <input id="syscur" name="syscur" type="hidden" value="2024^3^25^21^49^50" />
+            <h4>Instructions:</h4>
+            <ul>
+                    <li>Time limit: <b>50 minutes</b> to complete the test.</li>
+                                    <li>For multiple-answer questions, you get partial credit if you select one or more correct choices.</li>
+                                                    <li>You and your partners can use the built-in chatbox to communicate.</li>
+                            </ul>
+            <br />
+            <p><span style="font-size:1.4em;"><b>Important: </b></span>The following pages have been tested in various browsers, but for best test taking experience, make sure you have the following:</p>
+            <p>Use either Chrome or Edge - Display with high resolutions: 1920 x 1080 - High speed internet, at least 4 Mbps - A pointing device, such as a mouse.</p>
+            <p class="text-danger">
+                <b>
+                    Make sure you and your partner are ready before clicking the <span class="btn btn-success btn-xs">Start</span> button. Countdown starts immediately. If for some reason, you cannot access the test, refresh screen,
+                    use another browser or computer or try to login again. Make sure your computer time is accurate, and Javascript and pop-up are enabled. Use another device if these conditions cannot be met in this device.
+                </b>
+            </p>
+            <br />
+                <h4>Instructions from Event Supervisor (may need to scroll down to view all)</h4>
+                <div><p>The topic will only become available once the scilympiad test is started.</p><p>Parts A and B will both be available upon starting the test.</p><p>Print out the <a href="https://drive.google.com/file/d/1Mugu7rEQm5n1LazOhwGPx3gPJxE5lowe/view?usp=drivesdk" target="_blank">experimental design test packet.&nbsp;</a></p><p>One the 50 minutes is over, you will have 10 minutes to submit ALL pages as a PDF to the google form linked in the scylimpiad.</p><p>Materials:&nbsp;</p><p>10 rubber bands of any size, same or different</p><p>5 paper cups of the same size</p><p>1 meter of tape</p><p>at least 5 gram weights, of any weight, same or different</p><p>1 spring scale</p><p>10 balloons of any size or material, same or different</p><p>1 meter of string of any material&nbsp;</p><p>10 pennies</p><p>unlimited water</p><p><a href="https://docs.google.com/forms/d/e/1FAIpQLScct0ARNNLd_77VkifigaNqFU4fFQA8BMYBat02JoXZbH9QlA/viewform">Submission Form</a></p><p><br></p></div>
+                <hr />
+            <h4 class="text-success"><b>Good luck!</b></h4>
+    </div>
+    <p class="text-danger">
+        <b>
+            Once you enter the test, do not click the Back button, you may lose connection with your partners and event supervisors and the chatbox. If answers are not saved or synchronized, refresh the screen,
+            try again or contact event supervisors.
+        </b>
+    </p>
+    <br />
+    <a href='/jordan-so/TakeTest/Events' class="btn btn-warning btn-lg"><span class='glyphicon glyphicon-circle-arrow-left'></span> Back</a> <text> &nbsp; &nbsp; </text>
+        <a href='/jordan-so/TakeTest/Start?lid=1048H4&amp;tid=000EHA' class="btn btn-success btn-lg">Start <span class='glyphicon glyphicon-circle-arrow-right'></span></a>
+        <input type="hidden" id="tourid" value="1177" />
+    <input type="hidden" id="testid" value="000EHA" />
+    <input type="hidden" id="teamno" value="B06" />
+    <input type="hidden" id="senderid" value="1048H4" />
+    <input type="hidden" id="sessid" value="uz1t4g3bvedrpvnlnbjrdvjs" />
+    <input type="hidden" id="firstname" value="Harrison" />
+    <input type="hidden" id="partnerids" value="1048GY-1048GP" />
+    <input type="hidden" id="hrsoff" value=2 />
+</div>
+
+        
+        <hr />
+        <div class="row">
+    
+    <div class="col-md-6 text-left"><a href="https://scilympiad.com" target="_blank">&copy; 2024 - powered by Scilympiad</a> | <a href='/jordan-so/Home/Subscribers?sort=t' target="_blank">Tournaments</a> | <a href='/jordan-so/Give'>Support Us</a></div>
+    <div class="col-md-6 text-right">
+        <a href='/ToS.html' target="_blank">Terms of Use</a> | <a href='/Privacy.html' target="_blank">Privacy</a> | <a href='/CookiePolicy.html' target="_blank">Cookie Policy</a> | <a href='/jordan-so/Support' target="_blank">Support</a> | <a href="/jordan-so/Home/Contact">Contact</a>
+    </div>
+</div>
+
+    </div>
+    
+    <script src="/bundles/bootstrap?v=2Fz3B0iizV2NnnamQFrx-NbYJNTFeBJ2GM05SilbtQU1"></script>
+
+    
+</body>
+</html>
